@@ -159,7 +159,7 @@ public class MainWindow : Window {
                 table.attach(new LeftLabel("Sequence Number:"), 0, 1, 9, 10, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
                 table.attach(seqnum_label, 1, 2, 9, 10, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
 
-                parent_button = new LinkButton.with_label("", "Go To parent");
+                parent_button = new LinkButton.with_label("", "Go To Parent");
                 table.attach(parent_button, 0, 2, 10, 11, 0, 0, 0, 0);
 
                 scroll = new ScrolledWindow(null, null);
