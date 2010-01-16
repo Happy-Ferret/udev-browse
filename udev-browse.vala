@@ -82,7 +82,7 @@ public class MainWindow : Window {
         public MainWindow() {
                 string ss[1];
 
-                title = "udev Browser";
+                title = "udev-browse";
                 position = WindowPosition.CENTER;
                 set_default_size(1000, 700);
                 set_border_width(12);
@@ -168,8 +168,8 @@ public class MainWindow : Window {
                 scroll.add(property_view);
                 vbox.pack_start(scroll, true, true, 0);
 
-                follow_change_check_button = new CheckButton.with_mnemonic("Focus follows changing devices");
-                follow_add_check_button = new CheckButton.with_mnemonic("Focus follows new devices");
+                follow_change_check_button = new CheckButton.with_mnemonic("Focus follows _changing devices");
+                follow_add_check_button = new CheckButton.with_mnemonic("Focus follows _new devices");
                 follow_add_check_button.set_active(true);
                 vbox.pack_start(follow_add_check_button, false, false, 0);
                 vbox.pack_start(follow_change_check_button, false, false, 0);
