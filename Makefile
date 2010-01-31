@@ -22,3 +22,9 @@ udev-browse: udev-browse.vala gudev-1.0.vapi
 
 clean:
 	rm -f udev-browse
+
+release:
+	test "x$$VERSION" != x
+	git tag v$$VERSION -m "udev-browse $$VERSION"
+	git archive --prefix=udev-browse-$$VERSION/ v$$VERSION | gzip -c > udev-browse-$$VERSION.tar.gz
+	scp udev-browse-$$VERSION.tar.gz tango:public/
