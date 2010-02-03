@@ -3,18 +3,18 @@
 
   Copyright 2009 Lennart Poettering
 
-  dbus-browse is free software; you can redistribute it and/or modify
+  udev-browse is free software; you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License as
   published by the Free Software Foundation; either version 2.1 of the
   License, or (at your option) any later version.
 
-  dbus-browse is distributed in the hope that it will be useful, but
+  udev-browse is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
   General Public License for more details.
 
   You should have received a copy of the GNU Lesser General Public
-  License along with dbus-browse; if not, write to the Free Software
+  License along with udev-browse; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
   USA.
 ***/
@@ -106,10 +106,10 @@ public class MainWindow : Window {
                 device_view.cursor_changed.connect(device_changed);
                 device_view.set_enable_tree_lines(true);
 
-                device_view.insert_column_with_attributes (-1, "Device", new CellRendererText(), "text", 0);
-                device_view.insert_column_with_attributes (-1, "Subsystem", new CellRendererText(), "text", 2);
-                property_view.insert_column_with_attributes (-1, "Property", new CellRendererText(), "text", 0);
-                property_view.insert_column_with_attributes (-1, "Value", new CellRendererText(), "text", 1);
+                device_view.insert_column_with_attributes(-1, "Device", new CellRendererText(), "text", 0);
+                device_view.insert_column_with_attributes(-1, "Subsystem", new CellRendererText(), "text", 2);
+                property_view.insert_column_with_attributes(-1, "Property", new CellRendererText(), "text", 0);
+                property_view.insert_column_with_attributes(-1, "Value", new CellRendererText(), "text", 1);
 
                 Paned hpaned = new HPaned();
                 add(hpaned);
@@ -412,14 +412,14 @@ void uri_hook(LinkButton button, string uri) {
 }
 
 int main (string[] args) {
-    Gtk.init(ref args);
-    LinkButton.set_uri_hook(uri_hook);
+        Gtk.init(ref args);
+        LinkButton.set_uri_hook(uri_hook);
 
-    MainWindow window = new MainWindow();
-    window.set_current_device_by_sysfs_path(args.length > 1 ? args[1] : null);
-    window.show_all();
-    window.scroll_to_cursor();
+        MainWindow window = new MainWindow();
+        window.set_current_device_by_sysfs_path(args.length > 1 ? args[1] : null);
+        window.show_all();
+        window.scroll_to_cursor();
 
-    Gtk.main ();
-    return 0;
+        Gtk.main ();
+        return 0;
 }
