@@ -21,7 +21,7 @@ udev-browse: udev-browse.vala gudev-1.0.vapi
 	valac --pkg gee-1.0 --pkg gtk+-2.0 --pkg gudev-1.0 --pkg gnu --vapidir=. --Xcc=-D_GNU_SOURCE --Xcc=-DG_UDEV_API_IS_SUBJECT_TO_CHANGE udev-browse.vala
 
 clean:
-	rm -f udev-browse
+	rm -f udev-browse udev-browse.c
 
 release:
 	test "x$$VERSION" != x
