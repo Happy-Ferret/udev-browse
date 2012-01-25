@@ -17,8 +17,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA.
 
-udev-browse: udev-browse.vala gudev-1.0.vapi
-	valac --pkg gee-1.0 --pkg gtk+-2.0 --pkg gudev-1.0 --pkg gnu --vapidir=. --Xcc=-D_GNU_SOURCE --Xcc=-DG_UDEV_API_IS_SUBJECT_TO_CHANGE udev-browse.vala
+udev-browse: udev-browse.vala
+	valac --save-temps --pkg gee-1.0 --pkg gtk+-3.0 --pkg gudev-1.0 --pkg gnu --vapidir=. --Xcc=-D_GNU_SOURCE udev-browse.vala
 
 clean:
 	rm -f udev-browse udev-browse.c

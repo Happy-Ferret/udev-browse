@@ -1,2 +1,3 @@
-udev-browse
-*.tar.gz
+/udev-browse.c
+/udev-browse
+/*.tar.gz

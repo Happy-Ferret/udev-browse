@@ -19,7 +19,7 @@
   USA.
 ***/
 
-using Udev;
+using GUdev;
 using Gtk;
 using GLib;
 using Pango;
@@ -52,7 +52,7 @@ public class RightLabel : Label {
 }
 
 public class MainWindow : Window {
-        private Udev.Client client;
+        private GUdev.Client client;
 
         private TreeView device_view;
         private TreeView property_view;
@@ -83,7 +83,7 @@ public class MainWindow : Window {
                 string ss[1];
 
                 title = "udev-browse";
-                position = WindowPosition.CENTER;
+                set_position(WindowPosition.CENTER);
                 set_default_size(1000, 700);
                 set_border_width(12);
 
@@ -93,7 +93,7 @@ public class MainWindow : Window {
                 seqnums = new HashMap<string, uint64?>();
 
                 ss[0] = null;
-                client = new Udev.Client(ss);
+                client = new GUdev.Client(ss);
 
                 client.uevent.connect(uevent);
 
@@ -111,7 +111,7 @@ public class MainWindow : Window {
                 property_view.insert_column_with_attributes(-1, "Property", new CellRendererText(), "text", 0);
                 property_view.insert_column_with_attributes(-1, "Value", new CellRendererText(), "text", 1);
 
-                Paned hpaned = new HPaned();
+                Paned hpaned = new Paned(Orientation.HORIZONTAL);
                 add(hpaned);
 
                 ScrolledWindow scroll = new ScrolledWindow(null, null);
@@ -120,7 +120,7 @@ public class MainWindow : Window {
                 scroll.add(device_view);
                 hpaned.pack1(scroll, true, false);
 
-                Box vbox = new VBox(false, 6);
+                Box vbox = new Box(Orientation.VERTICAL, 6);
                 hpaned.pack2(vbox, true, false);
 
                 Table table = new Table(11, 2, false);
@@ -189,7 +189,7 @@ public class MainWindow : Window {
                 else {
                         string psysfs = p.get_sysfs_path();
 
-                        if (psysfs in rows) {
+                        if (rows.has_key(psysfs)) {
                                 TreeIter pi;
 
                                 device_model.get_iter(out pi, rows[psysfs].get_path());
@@ -209,19 +209,19 @@ public class MainWindow : Window {
         public void remove_device(Device d) {
                 string sysfs = d.get_sysfs_path();
 
-                if (!(sysfs in rows))
+                if (!rows.has_key(sysfs))
                         return;
 
                 TreeIter i;
                 device_model.get_iter(out i, rows[sysfs].get_path());
                 device_model.remove(i);
 
-                rows.remove(sysfs);
-                seqnums.remove(sysfs);
+                rows.unset(sysfs);
+                seqnums.unset(sysfs);
         }
 
         public void add_all_devices() {
-                foreach (Device d in client.query_by_subsystem())
+                foreach (Device d in client.query_by_subsystem(null))
                         add_device(d);
 
                 device_view.expand_all();
@@ -246,7 +246,7 @@ public class MainWindow : Window {
         public void set_current_device(Device? d) {
                 string sysfs = d.get_sysfs_path();
 
-                if (sysfs in rows)
+                if (rows.has_key(sysfs))
                         device_view.set_cursor(rows[sysfs].get_path(), null, false);
         }
 
@@ -351,12 +351,12 @@ public class MainWindow : Window {
                 } else {
                         string psysfs = p.get_sysfs_path();
 
-                        parent_button.set_sensitive(psysfs in rows);
+                        parent_button.set_sensitive(rows.has_key(psysfs));
                         parent_button.set_uri(psysfs);
                         parent_sysfs_path_label.set_text_or_na(psysfs);
                 }
 
-                if (sysfs in seqnums)
+                if (seqnums.has_key(sysfs))
                         seqnum_label.set_text_or_na("%llu".printf(seqnums[sysfs]));
                 else
                         seqnum_label.set_text_or_na();
@@ -384,7 +384,7 @@ public class MainWindow : Window {
                         device_view.expand_all();
                 }
 
-                if (sysfs in rows) {
+                if (rows.has_key(sysfs)) {
                         seqnums[sysfs] = d.get_seqnum();
 
                         if ((action == "change" && follow_change_check_button.get_active()) ||
@@ -407,13 +407,8 @@ public class MainWindow : Window {
         }
 }
 
-void uri_hook(LinkButton button, string uri) {
-        /* nop */
-}
-
 int main (string[] args) {
         Gtk.init(ref args);
-        LinkButton.set_uri_hook(uri_hook);
 
         MainWindow window = new MainWindow();
         window.set_current_device_by_sysfs_path(args.length > 1 ? args[1] : null);
