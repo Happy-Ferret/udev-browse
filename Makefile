@@ -26,5 +26,5 @@ clean:
 release:
 	test "x$$VERSION" != x
 	git tag v$$VERSION -m "udev-browse $$VERSION"
-	git archive --prefix=udev-browse-$$VERSION/ v$$VERSION | gzip -c > udev-browse-$$VERSION.tar.gz
-	scp udev-browse-$$VERSION.tar.gz tango:public/
+	git archive --prefix=udev-browse-$$VERSION/ v$$VERSION | xz -c > udev-browse-$$VERSION.tar.xz
+	scp udev-browse-$$VERSION.tar.xz tango:public/
