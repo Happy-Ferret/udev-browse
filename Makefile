@@ -18,7 +18,7 @@
 # USA.
 
 udev-browse: udev-browse.vala
-	valac --save-temps --pkg gee-1.0 --pkg gtk+-3.0 --pkg gudev-1.0 --pkg gnu --vapidir=. --Xcc=-D_GNU_SOURCE udev-browse.vala
+	valac --save-temps --pkg gee-1.0 --pkg gtk+-3.0 --pkg gudev-1.0 --pkg gnu --vapidir=. --Xcc=-D_GNU_SOURCE --Xcc=$(CFLAGS) udev-browse.vala
 
 clean:
 	rm -f udev-browse udev-browse.c
