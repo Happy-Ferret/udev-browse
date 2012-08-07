@@ -214,7 +214,7 @@ public class MainWindow : Window {
 
                 TreeIter i;
                 device_model.get_iter(out i, rows[sysfs].get_path());
-                device_model.remove(i);
+                device_model.remove(ref i);
 
                 rows.unset(sysfs);
                 seqnums.unset(sysfs);
