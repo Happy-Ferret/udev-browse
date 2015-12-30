@@ -17,8 +17,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA.
 
+VALAC ?= valac
+
 udev-browse: udev-browse.vala
-	valac --save-temps --pkg gee-0.8 --pkg gtk+-3.0 --pkg gudev-1.0 --pkg gnu --vapidir=. $(addprefix --Xcc=,$(CFLAGS)) --Xcc=-D_GNU_SOURCE udev-browse.vala
+	${VALAC} --save-temps --pkg gee-0.8 --pkg gtk+-3.0 --pkg gudev-1.0 --pkg gnu --vapidir=. $(addprefix --Xcc=,$(CFLAGS)) --Xcc=-D_GNU_SOURCE udev-browse.vala
 
 clean:
 	rm -f udev-browse udev-browse.c
