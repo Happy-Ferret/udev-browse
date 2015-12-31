@@ -356,7 +356,7 @@ public class MainWindow : Window {
                 }
 
                 if (seqnums.has_key(sysfs))
-                        seqnum_label.set_text_or_na("%llu".printf(seqnums[sysfs]));
+                        seqnum_label.set_text_or_na("%"+uint64.FORMAT_MODIFIER.printf(seqnums[sysfs]));
                 else
                         seqnum_label.set_text_or_na();
 
