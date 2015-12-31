@@ -114,6 +114,7 @@ public class MainWindow : Window {
 
                 ScrolledWindow scroll = new ScrolledWindow(null, null);
                 scroll.set_policy(PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
+                scroll.min_content_width = 220;
                 scroll.set_shadow_type(ShadowType.IN);
                 scroll.add(device_view);
                 hpaned.pack1(scroll, true, false);
