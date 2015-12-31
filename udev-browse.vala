@@ -31,7 +31,7 @@ public class LeftLabel : Label {
                 if (text != null)
                         set_markup("<b>%s</b>".printf(text));
                 this.xalign = 1;
-                this.margin_right = 6;
+                this.margin_end = 6;
         }
 }
 
@@ -80,7 +80,6 @@ public class MainWindow : Window {
         private HashMap<string,uint64?> seqnums;
 
         public MainWindow() {
-                string ss[1];
 
                 title = "udev-browse";
                 set_position(WindowPosition.CENTER);
@@ -92,8 +91,7 @@ public class MainWindow : Window {
                 rows = new HashMap<string, TreeRowReference>();
                 seqnums = new HashMap<string, uint64?>();
 
-                ss[0] = null;
-                client = new GUdev.Client(ss);
+                client = new GUdev.Client(null);
 
                 client.uevent.connect(uevent);
 
