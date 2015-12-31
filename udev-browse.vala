@@ -30,15 +30,15 @@ public class LeftLabel : Label {
         public LeftLabel(string? text = null) {
                 if (text != null)
                         set_markup("<b>%s</b>".printf(text));
-                set_alignment(1, 0);
-                set_padding(6, 0);
+                this.xalign = 1;
+                this.margin_right = 6;
         }
 }
 
 public class RightLabel : Label {
         public RightLabel(string? text = null) {
                 set_text_or_na(text);
-                set_alignment(0, 1);
+                this.xalign = 0;
                 set_ellipsize(EllipsizeMode.START);
                 set_selectable(true);
         }
@@ -123,9 +123,9 @@ public class MainWindow : Window {
                 Box vbox = new Box(Orientation.VERTICAL, 6);
                 hpaned.pack2(vbox, true, false);
 
-                Table table = new Table(11, 2, false);
-                table.set_row_spacings(6);
-                vbox.pack_start(table, false, false, 0);
+                Gtk.Grid layout = new Gtk.Grid();
+                layout.row_spacing = 6;
+                vbox.pack_start(layout, false, false, 0);
 
                 name_label = new RightLabel();
                 subsystem_label = new RightLabel();
@@ -138,29 +138,30 @@ public class MainWindow : Window {
                 number_label = new RightLabel();
                 seqnum_label = new RightLabel();
 
-                table.attach(new LeftLabel("Name:"), 0, 1, 0, 1, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(name_label, 1, 2, 0, 1, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Subsystem:"), 0, 1, 1, 2, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(subsystem_label, 1, 2, 1, 2, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Sysfs Path:"), 0, 1, 2, 3, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(sysfs_path_label, 1, 2, 2, 3, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Parent Sysfs Path:"), 0, 1, 3, 4, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(parent_sysfs_path_label, 1, 2, 3, 4, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Device Type:"), 0, 1, 4, 5, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(devtype_label, 1, 2, 4, 5, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Driver:"), 0, 1, 5, 6, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(driver_label, 1, 2, 5, 6, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Device File:"), 0, 1, 6, 7, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(device_file_label, 1, 2, 6, 7, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Device File Symbolic Link(s):"), 0, 1, 7, 8, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(device_file_symlinks_label, 1, 2, 7, 8, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Number:"), 0, 1, 8, 9, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(number_label, 1, 2, 8, 9, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(new LeftLabel("Sequence Number:"), 0, 1, 9, 10, AttachOptions.FILL, AttachOptions.FILL, 0, 0);
-                table.attach(seqnum_label, 1, 2, 9, 10, AttachOptions.EXPAND|AttachOptions.FILL, AttachOptions.FILL, 0, 0);
+                layout.attach(new LeftLabel("Name:"), 0, 1, 1, 1);
+                layout.attach(new LeftLabel("Subsystem:"), 0, 2, 1, 1);
+                layout.attach(new LeftLabel("Sysfs Path:"), 0, 3, 1, 1);
+                layout.attach(new LeftLabel("Parent Sysfs Path:"), 0, 4, 1, 1);
+                layout.attach(new LeftLabel("Device Type:"), 0, 5, 1, 1);
+                layout.attach(new LeftLabel("Driver:"), 0, 6, 1, 1);
+                layout.attach(new LeftLabel("Device File:"), 0, 7, 1, 1);
+                layout.attach(new LeftLabel("Device File Symbolic Link(s):"), 0, 8, 1, 1);
+                layout.attach(new LeftLabel("Number:"), 0, 9, 1, 1);
+                layout.attach(new LeftLabel("Sequence Number:"), 0, 10, 1, 1);
 
-                parent_button = new LinkButton.with_label("", "Go To Parent");
-                table.attach(parent_button, 0, 2, 10, 11, 0, 0, 0, 0);
+                layout.attach(name_label, 1, 1, 1, 1);
+                layout.attach(subsystem_label, 1, 2, 1, 1);
+                layout.attach(sysfs_path_label, 1, 3, 1, 1);
+                layout.attach(parent_sysfs_path_label, 1, 4, 1, 1);
+                layout.attach(devtype_label, 1, 5, 1, 1);
+                layout.attach(driver_label, 1, 6, 1, 1);
+                layout.attach(device_file_label, 1, 7, 1, 1);
+                layout.attach(device_file_symlinks_label, 1, 8, 1, 1);
+                layout.attach(number_label, 1, 9, 1, 1);
+                layout.attach(seqnum_label, 1, 10, 1, 1);
+
+                parent_button = new LinkButton("Go To Parent");
+                layout.attach(parent_button, 0, 11, 1, 1);
 
                 scroll = new ScrolledWindow(null, null);
                 scroll.set_policy(PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
